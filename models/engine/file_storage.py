@@ -28,7 +28,7 @@ class FileStorage():
         """Deserialize the JSON in __file_path if it exists"""
         from models.base_model import BaseModel
         from models.user import User
-        
+
         classes = {
             "BaseModel": BaseModel,
             "User": User
@@ -39,7 +39,7 @@ class FileStorage():
                 loaded = json.load(f)
                 FileStorage.__objects = {}
                 for key in loaded:
-                    dict_name = key.split(".")[0]
-                    FileStorage.__objects[key] = classes[dict_name](**loaded[key])
+                    d_n = key.split(".")[0]
+                    FileStorage.__objects[key] = classes[d_n](**loaded[key])
         except FileNotFoundError:
             return
