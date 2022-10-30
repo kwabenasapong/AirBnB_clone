@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 '''Amenity that inherits from BaseModel'''
 from models.base_model import BaseModel
 

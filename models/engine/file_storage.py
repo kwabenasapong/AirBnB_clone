@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Filestorage class"""
 import json
 
@@ -24,7 +25,7 @@ class FileStorage():
                 new_dict[k] = v.to_dict()
             json.dump(new_dict, f)
 
-    def reload(self):
+    Def reload(self):
         """Deserialize the JSON in __file_path if it exists"""
         from models.base_model import BaseModel
         from models.amenity import Amenity
