@@ -1,6 +1,5 @@
 """Filestorage class"""
 import json
-from models.base_model import BaseModel
 
 
 class FileStorage():
@@ -27,11 +26,20 @@ class FileStorage():
 
     def reload(self):
         """Deserialize the JSON in __file_path if it exists"""
+        from models.base_model import BaseModel
+        from models.user import User
+        
+        classes = {
+            "BaseModel": BaseModel,
+            "User": User
+        }
+
         try:
             with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 loaded = json.load(f)
-                for base_dict in loaded.values():
-                    new_obj = BaseModel(**base_dict)
-                    self.new(new_obj)
+                FileStorage.__objects = {}
+                for key in loaded:
+                    dict_name = key.split(".")[0]
+                    FileStorage.__objects[key] = classes[dict_name](**loaded[key])
         except FileNotFoundError:
             return
