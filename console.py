@@ -1,12 +1,20 @@
+#!/usr/bin/python3
 """The console module"""
-from models.base_model import BaseModel
 import cmd
 from models import storage
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb)"
-    selected = ["BaseModel", "state"]
+    selected = ["BaseModel", "User", "State", "City"]
+    selected = selected + ["Amenity", "Place", "Review"]
 
     def postloop(self):
         print("Thank you")
@@ -27,14 +35,6 @@ class HBNBCommand(cmd.Cmd):
         """Do nothing when line is empty"""
         pass
 
-    #Test function
-    def do_greet(self, line):
-        if line:
-            line = line.split()
-            print("welcome", line[1])
-        else:
-            print("welcome")
-
     """Creating the console commands"""
     def do_create(self, line):
         """This is the command to create new instances
@@ -45,12 +45,12 @@ class HBNBCommand(cmd.Cmd):
         elif line not in HBNBCommand.selected:
             print("** class doesn't exist **")
         else:
-            line = BaseModel()
+            line = eval(line)()
             line.save()
             print(line.id)
 
     def do_show(self, line):
-        """Prints the string representation of an 
+        """Prints the string representation of an
         instance based on the class name and id
         usage: show BaseModel 1234-1234-1234
         """
@@ -100,7 +100,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
-
     def do_all(self, line):
         """ Prints all string representation of all instances
             Usage: all BaseModel
@@ -119,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Updates an instance based on the class name and id by adding
-        or updating attribute (save the change into the JSON file). 
+        or updating attribute (save the change into the JSON file).
         Usage: update BaseModel 1234-1234-1234 email "aibnb@mail.com"
         """
         all_objects = storage.all()
@@ -145,14 +144,9 @@ class HBNBCommand(cmd.Cmd):
                 if key_name in all_objects.keys():
                     update_obj = all_objects[key_name]
                     update_to_dict = update_obj.to_dict()
+                    class_name = update_to_dict["__class__"]
                     update_to_dict[line[2]] = line[3]
-                    #print(update_to_dict)
-                    #print("-" * 100)
-                    #print("-" * 100)
-                    new_object = BaseModel(**update_to_dict)
-                    #print(new_object)
-                    #print("-" * 100)
-                    #print("-" * 100)
+                    new_object = eval(class_name)(**update_to_dict)
                     new_object.save()
                     storage.new(new_object)
 
@@ -160,7 +154,6 @@ class HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
         else:
             print("** class name missing **")
-
 
 
 if __name__ == "__main__":
