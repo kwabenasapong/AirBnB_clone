@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+'''Global variable initialized as class FileStorage'''
 from models.engine.file_storage import FileStorage
 
 
