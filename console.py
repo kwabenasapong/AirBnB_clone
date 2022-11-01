@@ -16,9 +16,6 @@ class HBNBCommand(cmd.Cmd):
     selected = ["BaseModel", "User", "State", "City"]
     selected = selected + ["Amenity", "Place", "Review"]
 
-    def postloop(self):
-        print("Thank you")
-
     def do_EOF(self, line):
         """This command is used to exit the program
         Usage: EOF
