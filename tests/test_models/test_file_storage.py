@@ -16,7 +16,7 @@ class Test_FileStorage(unittest.TestCase):
         obj = all_objs[obj_id]
 
     def test_new(self):
-        self.assertIs(self.data.new(), None)
+        self.assertIs(self.data.new(self.client), None)
 
     def test_all(self):
         self.data.new(self.client)
@@ -28,9 +28,8 @@ class Test_FileStorage(unittest.TestCase):
         self.data.new(self.client)
         self.data.save()
         file_path = os.path.abspath("file.json")
-        self.assertTrue(self.os.path.exists(file_path))
+        self.assertTrue(os.path.exists(file_path))
         self.assertIs(self.data.save(), None)
-        
 
     def test_reload(self):
         self.data.new(self.client)
