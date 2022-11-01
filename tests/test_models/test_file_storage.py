@@ -33,7 +33,7 @@ class Test_FileStorage(unittest.TestCase):
 
     def test_reload(self):
         self.data.new(self.client)
-        self.assertIs(self.data.save(), None)
+        self.assertIs(self.data.reload(), None)
 
 if __name__ == "__main__":
     unittest.main()
