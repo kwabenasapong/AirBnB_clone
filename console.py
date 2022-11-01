@@ -12,7 +12,7 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "
     selected = ["BaseModel", "User", "State", "City"]
     selected = selected + ["Amenity", "Place", "Review"]
 
